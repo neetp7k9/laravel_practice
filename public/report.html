@@ -1,0 +1,61 @@
+report of settingi<br>
+
+composer install<br>
+
+laravel install
+<br>
+
+create laravel.json file
+<br>
+laravel new  app
+
+<br>
+apache2 seting 
+<br>
+add host to /etc/hosts
+<br>
+cd /etc/apache2/sites-available
+<br>
+sudo vim myapp.conf
+<br>
+add
+<br>
+<VirtualHost *:80>
+<br>
+  ServerName myapp.localhost.com
+<br>
+  DocumentRoot "/home/account_name/projects/myapp/public"
+<br>
+  <Directory "/home/account_name/projects/myapp/public">
+<br>
+    AllowOverride all
+<br>
+    Require all granted
+<br>
+  </Directory>
+<br>
+</VirtualHost>
+<br>
+cd ../sites-enabled
+<br>
+sudo ln -s ../sites-available/myapp.conf
+<br>
+sudo vi envvars
+<br>
+export APACHE_RUN_USER= account_name
+<br>
+export APACHE_RUN_GROUP= account_name
+<br>
+
+<br>
+<br>
+a2enmod rewrite
+<br>
+sudo service apache2 restart
+<br>
+
+<br>
+chown of new directory
+<br>
+chang public/.ht?? file
+<br>
