@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Image;
-class Home extends Controller
-{
-    protected $layout = 'layouts.master';
 
+use App\Comment;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
+class CommentController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +22,6 @@ class Home extends Controller
     public function index()
     {
         //
-        $images = Auth::user()->images;
-        return view("home/index",['images'=>$images]);
     }
 
     /**
@@ -44,6 +43,17 @@ class Home extends Controller
     public function store(Request $request)
     {
         //
+        $cmt = Comment::create(Input::all());
+     #   $cmt-> = Input::all()['name'];
+        if(Auth::check()){
+        $cmt->user_id = Auth::id();
+        $cmt->image_id = Input::all()['image_id'];
+        $cmt->save();
+        return Redirect::to('/');
+        }else
+        {
+	  return "please login first";
+        }
     }
 
     /**

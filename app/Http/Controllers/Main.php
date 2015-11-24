@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\people;
 use App\Image;
+use App\Comment;
 
 class Main extends Controller
 {
+    protected $layout = 'layouts.master';
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +24,22 @@ class Main extends Controller
     public function index(Request $request)
     {
         //
-        if(Auth::check())
-        {
-          return Redirect::to('/home');
-        }
+       
+        if(Input::has("search")){
+	$target = "%".trim(Input::get()["search"],"\"")."%";
+	$images = Image::where('name', 'LIKE', $target)->get();
+        }else{
 	$images = Image::all();
+        }
+        if(Input::has("sort"))
+        {
+          if(Input::get()["sort"]==1)    
+        {$images = $images->sortBy(function($img)
+		{
+		    return -sizeof($img->comments);
+		});
+	}
+       } 
         return view("homepage",['images'=>$images]);
     }
 

@@ -9,8 +9,12 @@ use App\Http\Controllers\Controller;
 use App\Image;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
 class imageManage extends Controller
 {
+    protected $layout = 'layouts.master';
+
     /**
      * Display a listing of the resource.
      *
@@ -40,14 +44,13 @@ class imageManage extends Controller
     public function store(Request $request)
     {
         //
-        echo Input::all()['description'];
-
         $image = Image::create(Input::all());
         $image->name = Input::all()['name'];
         $image->user_id = Auth::id();
         $image->description = Input::all()['description'];
         $image->save();
-        return view("image/show",['img'=>$image]);
+        #return view("image/show",['img'=>$image]);
+        return Redirect::to('/home');
     }
 
     /**
@@ -60,7 +63,8 @@ class imageManage extends Controller
     {
         //
         $image = Image::find($id)->get();
-        return view("image/show",['img'=>$image]);
+      #  return view("image/show",['img'=>$image]);
+        return Redirect::to('/home');
     }
 
     /**

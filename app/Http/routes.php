@@ -38,3 +38,4 @@ Route::controllers([
    'password' => 'Auth\PasswordController',
 ]);
 Route::resource('image', 'imageManage');
+Route::resource('comment', 'CommentController');

@@ -37,10 +37,10 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
     public function comments()
     {
-        return $this->hasMany('Comment');
+        return $this->hasMany('App\Comment');
     }
     public function images()
     {
-        return $this->hasMany('Image');
+        return $this->hasMany('App\Image');
     }
 }
